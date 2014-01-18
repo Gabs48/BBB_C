@@ -3,6 +3,8 @@
 import multiprocessing
 import Gui
 import Pad
+import os
+import subprocess
 
 
 
@@ -15,6 +17,6 @@ if __name__ == '__main__':
 	#p1.start()
 	#gui = Gui.MainWindow();
 	#gui.run();
-	j = Pad.Joystick();
-	j.dispValues()
-	
+	pad = Pad.Joystick();
+	pad.dispFeatures();
+	pad.run()
