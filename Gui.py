@@ -39,5 +39,8 @@ class MainWindow(Frame):
 		
 	def run(self):
 		"Run the GUI"
-		while(1):
-			self.updateGui();
+		while True:
+			self.updateGui()
+	
+	def quit(self):
+		self.root.quit()

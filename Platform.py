@@ -88,7 +88,7 @@ class Pltf_ctl:
 	
 	def __init__(self, modif_=False, led1_=Led(), led2_=Led(), led3_=Led(), servo_h_=Servo(), servo_v_=Servo()):
 		"Class initialization"
-		self.modi = modif_;
+		self.modif = modif_;
 		self.led1 = led1_;
 		self.led2 = led2_;
 		self.led3 = led3_;
@@ -138,7 +138,7 @@ class Pltf_ctl:
 		
 	def set_modif(self, modif_):
 		"Set the modification state to true or false. True when something has been modified and not sent yet"
-		self.modif=modif_;
+		self.modif = modif_;
 
 # --------- Robot state -------------------
 
@@ -149,7 +149,7 @@ class Pltf_state:
 	
 	def __init__(self, modif_=False, led1_=Led(), led2_=Led(), led3_=Led(), servo_h_=Servo(), servo_v_=Servo()):
 		"Class initialization"
-		self.modi = modif_;
+		self.modif = modif_;
 		self.led1 = led1_;
 		self.led2 = led2_;
 		self.led3 = led3_;
@@ -199,4 +199,4 @@ class Pltf_state:
 		
 	def set_modif(self, modif_):
 		"Set the modification state to true or false. True when something has been modified and not sent yet"
-		self.modif=modif_;
+		self.modif = modif_;

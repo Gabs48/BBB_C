@@ -2,23 +2,26 @@
 
 import pygame
 import sys
-import Utils
 import time
-import datetime
+import threading
+from Platform import *
 
-class Joystick:
+class Joystick(threading.Thread):
 	"This class provides the tools for the Joystick utilisation in the Client interface"
+	PADUNRECOGN = 0
+	PADUSBGEN = 1
 	
-	def __init__(self):
+	def __init__(self, pltf_):
 		"Class initialization"
-		self.PADUNRECOGN = 0
-		self.PADUSBGEN = 1
+		threading.Thread.__init__(self)
+		self.isTerminated = False
+		self.pltf = pltf_
 		pygame.init()
 		pygame.joystick.init()
-		self.choose()
-		self.defType()
+		if self.isJoystick()==True:
+			self.defType()
 		
-	def choose(self):
+	def isJoystick(self):
 		"This function help to choose wich Joystick to use when plugged"
 		nb_joysticks = pygame.joystick.get_count()
 		if nb_joysticks >1:
@@ -26,11 +29,14 @@ class Joystick:
 			n = input();
 			self.j = pygame.joystick.Joystick(n-1)
 			self.j.init()
+			return True;
 		elif nb_joysticks == 1:
 			self.j = pygame.joystick.Joystick(0)
 			self.j.init()
+			return True;
 		else:
 			print "No Joystick plugged! Verify the connection and the recognition by the OS..."
+			return False;
 			
 	def defType(self):
 		if self.j.get_name().find("Microntek              USB Joystick") != -1:
@@ -52,47 +58,55 @@ class Joystick:
 		Y2 = 0.0
 		X3 = 0
 		Y3 = 0
-		while True:
+		while not self.isTerminated:
 			
 			# Sleep is required for an optimized processor consumption
-			time.sleep(0.5)
+			time.sleep(0.1)
 			
-			# Here we can fill with the command we want, depending of the joystick features
+			# Collect the values from the gamepad
 			for event in pygame.event.get():
 				if event.type == pygame.JOYBUTTONDOWN:
 					if event.button == 0:
-						#print "Triangle"
+						print "Triangle"
 					elif event.button == 1:
-						#print "Rond"
+						print "Rond"
 					elif event.button == 2:
-						#print "Croix"
+						print "Croix"
 					elif event.button == 3:
-						#print "Carre"
+						print "Carre"
 					elif event.button == 4:
-						#print "L1"
+						print "L1"
 					elif event.button == 5:
-						#print "R1"
+						print "R1"
 					elif event.button == 6:
-						#print "L2"
+						print "L2"
 					elif event.button == 7:
-						#print "R2"
+						print "R2"
 					elif event.button == 8:
-						#print "Select"
+						print "Select"
 					elif event.button == 9:
-						#print "Start"
+						print "Start"
 					elif event.button == 10:
-						#print "Pad1"
+						print "Pad1"
 					elif event.button == 11:
-						#print "Pad2"
+						print "Pad2"
 					else:
-						#print "Unknow"
+						print "Unknow"
 				if event.type == pygame.JOYAXISMOTION:
 					X1 = self.j.get_axis(0)
 					Y1 = - self.j.get_axis(1)
 					X2 = self.j.get_axis(2)
 					Y2 = - self.j.get_axis(3)
+					self.pltf.servo_h.set_speed(X1*10)
+					self.pltf.servo_v.set_speed(Y1*10)
+					self.pltf.modif = True
 				if event.type == pygame.JOYHATMOTION:
 					(X3, Y3) = self.j.get_hat(0)
+			
+			# Display values
 			#print "Axe 1: X = {:>3f} et Y = {:>3f}".format(X1,Y1),
 			#print "  ||  Axe 2: X = {:>3f} et Y = {:>3f}".format(X2,Y2),
 			#print "  ||  Axe 3: X = {:d} et Y = {:d}".format(X3,Y3)
+			
+	def stop(self):
+		self.isTerminated = True;

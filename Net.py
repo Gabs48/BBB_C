@@ -46,7 +46,11 @@ class NetToolClient:
 		
 	def connection(self):
 		"Connect the client to the server"
-		self.s.connect((self.host, self.port));
+		try:
+			self.s.connect((self.host, self.port));
+		except (socket.error) as ex:
+			print "Error: %s" % ex
+			return -1
 	
 	def send_str(self, msg):
 		"Send a string message to the server"
