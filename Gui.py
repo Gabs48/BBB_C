@@ -31,7 +31,7 @@ class MainWindow(Frame):
 
 	def updateGui(self):
 		"Update the video stream with a new image"
-		f = streamGet('127.0.0.1',8080,'/?action=snapshot')
+		f = get_video_stream('127.0.0.1',8080,'/?action=snapshot')
 		img = Image.open(StringIO.StringIO(f))
 		imagetk = ImageTk.PhotoImage(img)
 		self.addImage(imagetk)
