@@ -14,7 +14,7 @@ class Com(threading.Thread):
 		threading.Thread.__init__(self)
 		self.isTerminated = False
 		self.pltf = pltf_
-		self.net = NetToolClient('localhost')
+		self.net = NetToolClient('10.42.0.42')
 		self.net.connection()
 	
 	def run(self):

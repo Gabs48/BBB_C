@@ -31,7 +31,7 @@ class MainWindow(Frame):
 
 	def updateGui(self):
 		"Update the video stream with a new image"
-		f = get_video_stream('127.0.0.1',8080,'/?action=snapshot')
+		f = get_video_stream('10.42.0.42',8080,'/?action=snapshot')
 		img = Image.open(StringIO.StringIO(f))
 		imagetk = ImageTk.PhotoImage(img)
 		self.addImage(imagetk)
@@ -42,5 +42,5 @@ class MainWindow(Frame):
 		while True:
 			self.updateGui()
 	
-	def quit(self):
+	def stop(self):
 		self.root.quit()
