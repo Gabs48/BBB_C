@@ -9,7 +9,7 @@ class Servo:
 	ON = 1
 	
 	
-	def __init__(self, speed_=0, pos_=0, state_=self.OFF):
+	def __init__(self, speed_=0, pos_=0, state_=OFF):
 		"Class initialization"
 		self.speed = speed_;
 		self.pos = pos_;
@@ -18,27 +18,15 @@ class Servo:
 	def set_speed(self, speed_):
 		"Set the servomotor speed"
 		self.speed = speed_;
-		
-	def get_speed(self):
-		"Get the servomotor speed"
-		return self.speed;
 	
 	def set_pos(self, pos_):
 		"Set the servomotor position"
 		self.pos = pos_;
-		
-	def get_pos(self):
-		"Get the servomotor position"
-		return self.pos;
-	
+
 	def set_state(self, state_):
 		"Set the servomotor state"
 		self.state = state_;
-		
-	def get_state(self):
-		"Get the servomotor state"
-		return self.state;
-	
+
 class Led:
 	"This structure corresponds to the representation of a LED"
 	OFF = 0
@@ -47,17 +35,13 @@ class Led:
 	BLINK_M = 3
 	BLINK_H = 4
 	
-	def __init__(self, state_=self.OFF):
+	def __init__(self, state_=OFF):
 		"Class initialization"
 		self.state = state_;
 
 	def set_state(self, state_):
 		"Set the LED state"
 		self.state = state_;
-		
-	def get_state(self):
-		"Get the LED state"
-		return self.state;
 
 # --------- Physical sensors ------------
 
@@ -66,17 +50,13 @@ class Switch:
 	OFF = 0
 	ON = 1
 	
-	def __init__(self, state_=self.OFF):
+	def __init__(self, state_=OFF):
 		"Class initialization"
 		self.state = state_;
 
 	def set_state(self, state_):
 		"Set the switch "
 		self.state = state_;
-		
-	def get_state(self):
-		"Get the switch state"
-		return self.state;
 	
 class Potentiometer:
 	"This structure corresponds to the representation of a simple potentiometer"
@@ -91,25 +71,13 @@ class Potentiometer:
 		"Set the potentiometer value"
 		self.value = value_;
 		
-	def get_value(self):
-		"Get the potentiometer value"
-		return self.value;
-	
 	def set_min(self, mini_):
 		"Set the potentiometer minimal value"
 		self.mini = mini_;
-		
-	def get_min(self):
-		"Get the potentiometer minimal value"
-		return self.mini;
 	
 	def set_max(self, maxi_):
 		"Set the potentiometer maximal value"
 		self.maxi = maxi_;
-		
-	def get_max(self):
-		"Get the potentiometer maximal value"
-		return self.maxi;
 
 # --------- Robot commands ----------------
 
@@ -118,16 +86,16 @@ class Pltf_ctl:
 	HORI = 0
 	VERT = 1
 	
-	def __init__(self, modif_=False, led1_=Led(), led2=Led(), led3_=Led(), servo_h_=Servo(), servo_v_=Servo()):
+	def __init__(self, modif_=False, led1_=Led(), led2_=Led(), led3_=Led(), servo_h_=Servo(), servo_v_=Servo()):
 		"Class initialization"
 		self.modi = modif_;
 		self.led1 = led1_;
-		self.led1 = led1_;
-		self.led1 = led1_;
+		self.led2 = led2_;
+		self.led3 = led3_;
 		self.servo_h = servo_h_;
 		self.servo_v = servo_v_;
 		
-	def set_led(self, led_, num_:
+	def set_led(self, led_, num):
 		"Set the led. Variable num represents the LED number. The number 0 corresponds to the first one"
 		if num==0:
 			self.led1 = led_;
@@ -135,18 +103,18 @@ class Pltf_ctl:
 			self.led2 = led_;
 		elif num==2:
 			self.led3 = led_;
-		else
+		else:
 			print "Error";
 	
 	def get_led(self, num):
-		"Get the led1. Variable num represents the LED number. The number 0 corresponds to the first one"
+		"Get the led. Variable num represents the LED number. The number 0 corresponds to the first one"
 		if num==0:
 			return self.led1;
 		elif num==1:
 			return self.led2;
 		elif num==2:
 			return self.led3;
-		else
+		else:
 			print "Error";
 			return -1;
 		
@@ -156,25 +124,21 @@ class Pltf_ctl:
 			self.servo_h = servo_;
 		elif orientation==self.VERT:
 			self.servo_V = servo_;
-		else
+		else:
 			print "Error";
 			
 	def get_servo(self, servo_, orientation):
-		"Set the Servomotor. Variable orientation is set to HORI or VERT depending of which Servomotor to select"
+		"Get the Servomotor. Variable orientation is set to HORI or VERT depending of which Servomotor to select"
 		if orientation==self.HORI:
 			self.servo_h = servo_;
 		elif orientation==self.VERT:
 			self.servo_V = servo_;
-		else
+		else:
 			print "Error";
 		
 	def set_modif(self, modif_):
 		"Set the modification state to true or false. True when something has been modified and not sent yet"
 		self.modif=modif_;
-		
-	def get_modif(self):
-		"Get the modification state"
-		return self.modif;
 
 # --------- Robot state -------------------
 
@@ -183,16 +147,16 @@ class Pltf_state:
 	HORI = 0
 	VERT = 1
 	
-	def __init__(self, modif_=False, led1_=Led(), led2=Led(), led3_=Led(), servo_h_=Servo(), servo_v_=Servo()):
+	def __init__(self, modif_=False, led1_=Led(), led2_=Led(), led3_=Led(), servo_h_=Servo(), servo_v_=Servo()):
 		"Class initialization"
 		self.modi = modif_;
 		self.led1 = led1_;
-		self.led1 = led1_;
-		self.led1 = led1_;
+		self.led2 = led2_;
+		self.led3 = led3_;
 		self.servo_h = servo_h_;
 		self.servo_v = servo_v_;
 		
-	def set_led(self, led_, num_:
+	def set_led(self, led_, num):
 		"Set the led. Variable num represents the LED number. The number 0 corresponds to the first one"
 		if num==0:
 			self.led1 = led_;
@@ -200,18 +164,18 @@ class Pltf_state:
 			self.led2 = led_;
 		elif num==2:
 			self.led3 = led_;
-		else
+		else:
 			print "Error";
 	
 	def get_led(self, num):
-		"Get the led1. Variable num represents the LED number. The number 0 corresponds to the first one"
+		"Get the led. Variable num represents the LED number. The number 0 corresponds to the first one"
 		if num==0:
 			return self.led1;
 		elif num==1:
 			return self.led2;
 		elif num==2:
 			return self.led3;
-		else
+		else:
 			print "Error";
 			return -1;
 		
@@ -221,22 +185,18 @@ class Pltf_state:
 			self.servo_h = servo_;
 		elif orientation==self.VERT:
 			self.servo_V = servo_;
-		else
+		else:
 			print "Error";
 			
 	def get_servo(self, servo_, orientation):
-		"Set the Servomotor. Variable orientation is set to HORI or VERT depending of which Servomotor to select"
+		"Get the Servomotor. Variable orientation is set to HORI or VERT depending of which Servomotor to select"
 		if orientation==self.HORI:
 			self.servo_h = servo_;
 		elif orientation==self.VERT:
 			self.servo_V = servo_;
-		else
+		else:
 			print "Error";
 		
 	def set_modif(self, modif_):
 		"Set the modification state to true or false. True when something has been modified and not sent yet"
 		self.modif=modif_;
-		
-	def get_modif(self):
-		"Get the modification state"
-		return self.modif;
